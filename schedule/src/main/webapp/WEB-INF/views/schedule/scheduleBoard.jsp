@@ -141,7 +141,9 @@
 			}, 
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			events: [],
+			events: {
+		            url: "getMonthlyEventList.do"
+		            }
 		});
 		
 		//$('table.calendar > tbody > tr > td:nth-child(-n+2)').addClass('fc-sat');  요일 색깔 변경 

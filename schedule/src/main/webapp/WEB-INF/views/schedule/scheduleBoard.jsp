@@ -21,7 +21,7 @@
   <!-- jqWidget css -->
   <link rel="stylesheet" href="./resources/vendor/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
   
-  <!-- full calendar style -->
+  <!-- full calendar style -->  
   <link href='./resources/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
   <link href='./resources/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
   <script src='./resources/fullcalendar/lib/moment.min.js'></script>
@@ -144,6 +144,7 @@
 			events: [],
 		});
 		
+		//$('table.calendar > tbody > tr > td:nth-child(-n+2)').addClass('fc-sat');  요일 색깔 변경 
 	});
 	
 	// 등록버튼 클릭 시 처리
@@ -168,12 +169,12 @@
 		    },
 		    success: function(data) {
 	    			if(data.result == 'suc' ){
-	    				alert('일정이 저장되었습니다.');
+	    				alert('일정이 저장되었습니다.');  // jqxpopup dialog로 변경 고려 
 	    			}
 	    			$('#calendar').fullCalendar('renderEvent', eventData, true);
 		    },
 		    error: function(data) {
-
+				alert(data.result);
 		    },
 		    complete: function(jqXHR) {}
 		});

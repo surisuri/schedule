@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Schedule">
+	    <insert id="insertSchedule" parameterType="com.lkssoft.project.schedule.svc.ScheduleVO">
+ 				INSERT INTO SCHEDULE (
+ 						 SCHEDULE_ID
+	            		   , EVENT_DATE 
+	            		   , EVENT_START_TIME 
+	            		   , EVENT_END_TIME 
+	            		   , PATIENT_NAME
+	            		   , TREAT_DVS_CODE 
+	            		   , SIMPLE_MSG_CTNT
+	            		   , EVENT_STATUS
+	            		   , EXAM_USR_ID
+	            		   , DELETE_YN
+	            		   , CREATE_DT
+	            		   , CREATE_USR_ID 
+	            		   , UPDATE_DT
+	            		   , UPDATE_USR_ID
+	                   )
+	            VALUES (#{scheduleId}
+	                    , #{eventDate}
+	                    , #{eventStartTime}
+	                    , #{eventEndTime}
+	                    , #{patientName}
+	                    , #{treatDvsCode}
+	                    , #{simpleMsgCtnt}
+	                    , #{eventStatus}
+	                    , #{examUsrId}
+	                    , IFNULL(#{deleteYn}, 'N')
+	                    , #{createDt}
+	                    , #{createUsrId}
+	                    , #{updateDt}
+	                    , #{updateUsrId}
+	                   )  
+	    </insert>
+	    <!--  
+	    <update id="updateSchedule" parameterType="com.lkssoft.project.schedule.svc.ScheduleVO">
+		   UPDATE SCHEDULE
+                  SET 
+                  EVENT_DATE = #{eventDate}
+                  , EVENT_START_TIME = #{eventStartTime}
+                  , EVENT_END_TIME = #{eventEndTime}
+                  , PATIENT_NAME = #{patientName}
+                  , TREAT_DVS_CODE = #{treatDvsCode}
+                  , SIMPLE_MSG_CTNT = #{simpleMsgCtnt}
+                  , EVENT_STATUS = #{eventStatus}
+                  , EXAM_USR_ID = #{examUsrId}
+                  , DELETE_YN = IFNULL(#{deleteYn}, 'N')
+                  , CREATE_DT = #{createDt}
+                  , CREATE_USR_ID = #{createUsrId}
+                  , UPDATE_DT = #{updateDt}
+                  , UPDATE_USR_ID = #{updateUsrId}
+            WHERE SCHEDULE_ID = #{scheduleId}
+		</update>	-->    
+</mapper>

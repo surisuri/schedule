@@ -2,14 +2,14 @@
 
 <html>
 
-<head>
+<head> 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
   <title>심리실 일정관리</title>
-  
+   
   
   <!-- Bootstrap core CSS-->
   <link href="./resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -18,10 +18,10 @@
   <!-- Custom styles for this template-->
   <link href="./resources/css/sb-admin.css" rel="stylesheet">
   
-  <!-- jqWidget css -->
+  <!-- jqWidget css --> 
   <link rel="stylesheet" href="./resources/vendor/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
   
-  <!-- full calendar style -->
+  <!-- full calendar style -->  
   <link href='./resources/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
   <link href='./resources/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
   <script src='./resources/fullcalendar/lib/moment.min.js'></script>
@@ -141,17 +141,45 @@
 			}, 
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			events: [],
-		});
+			//events: [],
+			events: function(start, end, timezone, callback) {
+				console.log(start.format());
+				console.log(end.format());
+		        jQuery.ajax({
+		            url: 'selectListSchedule.do',
+		            type: 'POST',
+		            dataType: 'json',
+		            data: {
+		                start: start.format(),
+		                end: end.format()
+		            },
+		            success: function(doc) {
+		                var events = [];
+		                if(!!doc.result){
+		                    $.map( doc.result, function( r ) {
+		                        events.push({
+		                            id: r.scheduleId,
+		                            title: r.patientName,
+		                            start: r.startDateTime,
+		                            end: r.endDateTime
+		                        });
+		                    });
+		                }
+		                callback(events);
+		            }
+		        });
+		    }
+		}); // end of fullcalendar 
 		
+		//$('table.calendar > tbody > tr > td:nth-child(-n+2)').addClass('fc-sat');  요일 색깔 변경 
 	});
 	
 	// 등록버튼 클릭 시 처리
 	function fn_register(){
 		var eventData = {
-			title:$('#patientName'),
-			start:$('#eventDate').val() + $('#eventStartTime'),
-			end:$('#eventDate').val() + $('#eventEndTime'),
+			title:$('#patientName').val(),
+			start:$('#eventDate').val() + " " + $('#eventStartTime').val(),
+			end:$('#eventDate').val() + " " + $('#eventEndTime').val(),
 		};
 		
 	    	var formSerialized = $('#scheduleForm').serialize();
@@ -167,11 +195,13 @@
 		    beforeSend: function(jqXHR) {
 		    },
 		    success: function(data) {
-		    		alert(data.success);
-				$('#calendar').fullCalendar('renderEvent', eventData, true);
+	    			if(data.result == 'suc' ){
+	    				alert('일정이 저장되었습니다.');  // jqxpopup dialog로 변경 고려 
+	    			}
+	    			$('#calendar').fullCalendar('renderEvent', eventData, true);
 		    },
 		    error: function(data) {
-		    		alert(data.success);
+				alert(data.result);
 		    },
 		    complete: function(jqXHR) {}
 		});
@@ -182,12 +212,12 @@
 	
 	// 취소버튼 클릭 시 처리 
 	function fn_calcel(){ 
-	    $('#date').val('');
-	    $('#startTime').val('');
-	    $('#endTime').val('');
-	    $('#name').val('');
+	    $('#eventDate').val('');
+	    $('#eventStartTime').val('');
+	    $('#eventEndTime').val('');
+	    $('#patientName').val('');
 		$("#inspection").jqxComboBox({ selectedIndex: 0 }); 
-	    $('#remark').val('');
+	    $('#simpleMsgCtnt').val('');
 	    
 	    $('#scheduleMng').addClass('modal fade');
 	}
@@ -319,7 +349,7 @@
        		  <div id="inspection"></div>
           </div>
           <div class="form-group">
-            <label for="remarkLabel">간단 메시지</label>
+            <label for="simpleMsgCtntLabel">간단 메시지</label>
             <input class="form-control" id="simpleMsgCtnt" name="simpleMsgCtnt" type="text" placeholder="input remark">
           </div>                    
           <div class="form-group">

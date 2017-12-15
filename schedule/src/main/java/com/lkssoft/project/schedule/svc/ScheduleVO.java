@@ -19,6 +19,25 @@ public class ScheduleVO extends CommonVO{
 	private String updateDt;
 	private String updateUsrId;
 	
+	/**
+	 * 시작일자(조회조건)
+	 */
+	private String startDate;
+	/**
+	 * 종료일자(조회조건) 
+	 */
+	private String endDate;
+	
+	/**
+	 * 시작일시
+	 */
+	private String startDateTime;
+	
+	/**
+	 * 종료일시 
+	 */
+	private String endDateTime;
+	
 	public String getScheduleId() {
 		return scheduleId;
 	}
@@ -103,5 +122,29 @@ public class ScheduleVO extends CommonVO{
 	}
 	public void setUpdateUsrId(String updateUsrId) {
 		this.updateUsrId = updateUsrId;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getStartDateTime() {
+		return startDateTime;
+	}
+	public void setStartDateTime(String startDateTime) {
+		this.startDateTime = startDateTime;
+	}
+	public String getEndDateTime() {
+		return endDateTime;
+	}
+	public void setEndDateTime(String endDateTime) {
+		this.endDateTime = endDateTime;
 	}
 }
